@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trilha da Dança | NY 2026</title>
-    <meta name="description" content="Imersão de Dança em Nova Iorque 2026. Uma experiência para bailarinos.">
+    <title>Trilha da Dança | NYC 2026</title>
+    <meta name="description" content="Imersão de Dança em Nova Iorque 2026. A experiência definitiva para bailarinos.">
     
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- GSAP & Lenis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -21,270 +24,315 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0f172a',
-                        secondary: '#ffffff',
-                        accent: '#c0a062',
-                        offwhite: '#f8fafc'
+                        background: '#050505',
+                        surface: '#111111',
+                        primary: '#ffffff',
+                        accent: '#D4AF37', /* Elegant Gold */
+                        muted: '#888888'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
-                    },
-                    backgroundImage: {
-                        'noise': "url('https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-clean-blog/5.0.12/assets/img/post-bg.jpg')",
                     }
                 }
             }
         }
     </script>
     
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="font-sans antialiased overflow-x-hidden relative selection:bg-accent selection:text-primary">
+    <style>
+        :root {
+            --accent-color: #D4AF37;
+        }
+        
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            cursor: none; /* Custom Cursor */
+        }
 
+        /* Clean Custom Cursor */
+        .cursor-dot {
+            width: 8px; height: 8px; background-color: var(--accent-color);
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+            border-radius: 50%; transform: translate(-50%, -50%);
+            transition: transform 0.2s ease;
+        }
+        .cursor-outline {
+            width: 32px; height: 32px; border: 1px solid rgba(212, 175, 55, 0.4);
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+            border-radius: 50%; transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        
+        /* Magnetic hover effect */
+        .hover-target:hover ~ .cursor-outline {
+            width: 60px; height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: transparent;
+        }
+
+        /* Glassmorphism utilities */
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Image Masking & Filters */
+        .image-mask {
+            clip-path: inset(0 0 0 0);
+            transition: clip-path 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .image-mask.reveal {
+            clip-path: inset(0 0 0 0);
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed; inset: 0; background: #050505; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .loader-line {
+            width: 0%; height: 1px; background-color: var(--accent-color);
+            margin-top: 2rem;
+        }
+
+        /* Smooth inputs */
+        input:focus ~ label, input:not(:placeholder-shown) ~ label {
+            transform: translateY(-1.5rem) scale(0.85);
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-accent selection:text-background">
+
+    <!-- Clean Loader -->
     <div id="loader">
-        <h1 class="font-serif text-accent text-4xl animate-pulse italic">NY / 2026</h1>
+        <h1 class="font-serif text-primary text-3xl italic tracking-widest opacity-0" id="loader-text">TRILHA DA DANÇA</h1>
+        <div class="loader-line" id="loader-line"></div>
     </div>
 
-    <div class="noise-overlay"></div>
+    <!-- Custom Cursor -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
 
-    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference">
-        <a href="#" class="block w-24 md:w-32 hover:scale-110 transition-transform duration-500">
-            <img src="https://imersao-da-danca-1nc7.vercel.app/logo.png" alt="Trilha da Dança" class="w-full brightness-0 invert">
-        </a>
-        <a href="#lista-vip" class="group relative overflow-hidden px-6 py-2 rounded-full border border-white/30 hover:bg-white transition-all duration-300 shadow-[0_0_15px_rgba(192,160,98,0.2)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)]">
-            <span class="relative z-10 text-xs uppercase tracking-widest text-white group-hover:text-primary font-bold">Entrar na Lista</span>
-        </a>
+    <!-- Glass Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-5 glass-nav transition-transform duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="block w-28 md:w-32 hover-target">
+                <img src="https://imersao-da-danca-1nc7.vercel.app/logo.png" alt="Trilha da Dança" class="w-full brightness-0 invert opacity-90 hover:opacity-100 transition-opacity">
+            </a>
+            <a href="#lista-vip" class="group hover-target relative overflow-hidden px-6 py-2 rounded-full border border-white/20 hover:border-accent transition-all duration-300">
+                <span class="relative z-10 text-[10px] md:text-xs uppercase tracking-[0.2em] text-white group-hover:text-accent font-medium">Lista VIP</span>
+            </a>
+        </div>
     </nav>
 
-    <header class="relative min-h-[110vh] w-full flex flex-col justify-center items-center overflow-hidden bg-primary pt-20">
+    <!-- HERO SECTION: Clean & Editorial -->
+    <header class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-background">
         
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 scale-150" data-speed="0.2">
-            <h1 class="font-serif text-huge text-center whitespace-nowrap text-outline rotate-90 md:rotate-0">
-                NEW YORK<br>CITY 2026
-            </h1>
-        </div>
+        <!-- Subtle Background Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-accent/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-        <div class="relative z-10 w-full max-w-4xl mx-auto h-[60vh] md:h-[80vh] flex items-center justify-center">
-            <img src="https://imersao-da-danca-1nc7.vercel.app/bailarina1.png" 
-                 alt="Bailarina" 
-                 class="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(192,160,98,0.3)] origin-bottom scale-110 hero-img">
-        </div>
-
-        <div class="absolute bottom-12 md:bottom-24 left-0 w-full px-6 md:px-20 z-20 flex flex-col md:flex-row justify-between items-end">
-            <div class="mb-8 md:mb-0 max-w-lg">
-                <span class="block text-accent uppercase tracking-[0.5em] text-xs mb-4">Destino Confirmado • Julho 2026</span>
-                <h2 class="text-4xl md:text-6xl font-serif font-black italic leading-[0.9]">
-                    A GRANDE MAÇÃ <br> 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">ESTÁ À TUA ESPERA.</span>
-                </h2>
-            </div>
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center mt-20">
+            <span class="block text-accent uppercase tracking-[0.4em] text-xs md:text-sm mb-6 hero-elem opacity-0">Julho 2026 • 10 Dias</span>
             
-            <a href="#lista-vip" class="relative group inline-block">
-                <div class="absolute -inset-1 bg-gradient-to-r from-accent to-white rounded-lg blur opacity-40 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <div class="relative px-8 py-4 bg-black rounded-lg leading-none flex items-center divide-x divide-gray-600">
-                    <span class="flex items-center space-x-5">
-                        <span class="pr-6 text-gray-100 font-bold tracking-wide">Garantir a minha vaga VIP</span>
-                    </span>
-                    <span class="pl-6 text-accent group-hover:text-white transition duration-200">→</span>
-                </div>
-            </a>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl font-medium leading-tight mb-8 hero-elem opacity-0">
+                New York <br>
+                <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">City</span>
+            </h1>
+            
+            <p class="max-w-xl mx-auto text-muted text-sm md:text-base font-light tracking-wide mb-12 hero-elem opacity-0">
+                A tua arte exige o maior palco do mundo. Uma imersão exclusiva para bailarinos na cidade onde a dança dita o ritmo.
+            </p>
+            
+            <!-- Magnetic Button -->
+            <div class="hero-elem opacity-0 magnetic-wrap inline-block">
+                <a href="#lista-vip" class="magnetic-btn hover-target inline-flex items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full border border-accent/40 bg-accent/5 hover:bg-accent hover:text-background text-accent transition-colors duration-300 backdrop-blur-sm group">
+                    <span class="font-serif italic text-lg tracking-wider group-hover:scale-110 transition-transform duration-300">Descobrir</span>
+                </a>
+            </div>
         </div>
     </header>
 
-    <section class="relative py-24 md:py-40 bg-white text-primary rounded-t-[3rem] -mt-20 z-30">
+    <!-- SECTION 2: THE HOOK (Minimal Text) -->
+    <section class="py-32 bg-surface relative z-20 border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center space-y-12">
+                <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.2] text-primary/90 reveal-text">
+                    Não se trata apenas de viajar. <br>
+                    Trata-se de <span class="italic text-accent">redefinir</span> o teu movimento.
+                </h2>
+                <div class="w-1px h-24 bg-gradient-to-b from-accent to-transparent mx-auto"></div>
+                <p class="text-lg md:text-xl font-light text-muted max-w-2xl mx-auto leading-relaxed">
+                    Chegou o momento de elevar a tua técnica. Durante 10 dias, vais respirar a atmosfera dos estúdios mais conceituados de Manhattan, assistir às produções que marcam a história e viver a cidade como um verdadeiro artista nova-iorquino.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: STICKY SCROLL EXPERIENCE (Innovative Layout) -->
+    <section class="relative bg-background" id="experience-section">
         <div class="container mx-auto px-6 max-w-7xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-                <div>
-                    <h3 class="font-serif text-5xl md:text-8xl leading-[0.85] reveal-text">
-                        A tua arte <br>exige <br><span class="text-accent italic">o maior palco.</span>
-                    </h3>
-                </div>
-                <div class="pt-10 md:pt-4 space-y-8">
-                    <p class="text-lg md:text-xl font-light leading-relaxed">
-                        Chegou o momento de elevar a tua técnica ao nível mundial. Estamos a aterrar na cidade que nunca dorme, onde a Broadway dita o ritmo e os sonhos são feitos de betão e sapatilhas de ponta.
-                    </p>
-                    <p class="text-lg md:text-xl font-bold border-l-4 border-accent pl-6">
-                        10 DIAS. JULHO DE 2026.<br>
-                        Nova Iorque vai redefinir o teu movimento.
-                    </p>
-                </div>
-            </div>
-
-            <div class="mt-32 w-full overflow-hidden">
-                <div class="flex whitespace-nowrap marquee-container">
-                    <span class="text-[10vw] font-serif italic text-primary opacity-10 mx-4">Broadway</span>
-                    <span class="text-[10vw] font-serif font-bold text-accent mx-4">Technique</span>
-                    <span class="text-[10vw] font-serif italic text-primary opacity-10 mx-4">Passion</span>
-                    <span class="text-[10vw] font-serif font-bold text-accent mx-4">New York</span>
-                    <span class="text-[10vw] font-serif italic text-primary opacity-10 mx-4">Performance</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="relative py-32 bg-primary text-white overflow-hidden">
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-center font-serif text-5xl md:text-7xl mb-24">
-                O Que Vamos <span class="italic text-accent">Viver</span>
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(200px,auto)]">
+            <div class="flex flex-col lg:flex-row items-start py-24">
                 
-                <div class="md:col-span-7 relative group overflow-hidden rounded-2xl border border-white/10 hover:border-accent/50 hover:shadow-[0_0_30px_rgba(192,160,98,0.15)] transition-all duration-500 feature-card bg-[#141d34]">
-                    <div class="p-10 flex flex-col justify-between h-full min-h-[400px]">
-                        <div class="z-20">
-                            <h4 class="text-3xl font-serif mb-2 drop-shadow-lg">Estúdios Icónicos</h4>
-                            <p class="text-gray-300 max-w-xs drop-shadow-md">Steps on Broadway & Broadway Dance Center. Pisa o chão onde as lendas ensaiam.</p>
+                <!-- Left: Sticky Title -->
+                <div class="w-full lg:w-1/3 lg:sticky lg:top-40 mb-16 lg:mb-0">
+                    <span class="text-accent text-xs uppercase tracking-[0.3em] font-medium mb-4 block">A Experiência</span>
+                    <h3 class="font-serif text-5xl md:text-6xl mb-6">Onde a <br><span class="italic text-white/50">Mágica</span> <br>Acontece.</h3>
+                    <p class="text-muted font-light text-sm md:text-base pr-8">
+                        Um roteiro meticulosamente desenhado para equilibrar a evolução técnica intensa com a inspiração inesgotável que só as ruas de Nova Iorque podem oferecer.
+                    </p>
+                </div>
+
+                <!-- Right: Scrolling Cards -->
+                <div class="w-full lg:w-2/3 lg:pl-16 space-y-24">
+                    
+                    <!-- Item 1 -->
+                    <div class="group experience-card">
+                        <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-sm mb-6 image-mask">
+                            <img src="https://images.pexels.com/photos/2188012/pexels-photo-2188012.jpeg" alt="Estúdios" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
                         </div>
-                        <span class="text-9xl absolute -bottom-10 -right-10 opacity-10 font-serif z-0 group-hover:scale-110 transition-transform duration-700">01</span>
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent z-10"></div>
-                        <img src="https://images.pexels.com/photos/2188012/pexels-photo-2188012.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500 mix-blend-overlay" loading="lazy" alt="Studio">
+                        <h4 class="text-3xl font-serif mb-3">Estúdios Icónicos</h4>
+                        <p class="text-muted font-light max-w-md">Treina lado a lado com profissionais no Broadway Dance Center e Steps on Broadway. Absorve a energia de quem faz a indústria acontecer.</p>
                     </div>
-                </div>
 
-                <div class="md:col-span-5 relative group overflow-hidden rounded-2xl border border-white/10 bg-[#1e293b] hover:border-white/30 transition-all feature-card">
-                    <div class="p-8 h-full flex flex-col justify-center items-center text-center">
-                         <div class="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-6 text-accent group-hover:bg-accent group-hover:text-black group-hover:shadow-[0_0_20px_rgba(192,160,98,0.5)] transition-all">
-                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                         </div>
-                        <h4 class="text-2xl font-serif mb-2">A Magia da Broadway</h4>
-                        <p class="text-gray-400 text-sm">Assiste aos musicais que definem a indústria. Lugar VIP garantido.</p>
+                    <!-- Item 2 -->
+                    <div class="group experience-card">
+                        <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-sm mb-6 image-mask">
+                            <img src="https://images.pexels.com/photos/17036643/pexels-photo-17036643.jpeg" alt="Broadway" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+                        </div>
+                        <h4 class="text-3xl font-serif mb-3">A Cultura da Broadway</h4>
+                        <p class="text-muted font-light max-w-md">Lugar garantido nos musicais mais aclamados do momento. Entende o que é necessário para dominar o palco na sua forma mais pura.</p>
                     </div>
-                </div>
 
-                <div class="md:col-span-4 relative group overflow-hidden rounded-2xl border border-white/10 bg-[#1e293b] feature-card min-h-[300px]">
-                     <img src="https://images.pexels.com/photos/3771825/pexels-photo-3771825.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-700" loading="lazy" alt="Urban Photoshoot">
-                     <div class="absolute inset-0 bg-black/60 p-8 flex flex-col justify-end">
-                        <h4 class="text-2xl font-serif text-white mb-1">Photoshoot Urbano</h4>
-                        <p class="text-gray-300 text-sm">O teu portfólio, com as luzes de NYC como fundo.</p>
-                     </div>
-                </div>
-
-                <div class="md:col-span-8 relative group overflow-hidden rounded-2xl border border-white/10 hover:border-accent/50 transition-colors duration-500 feature-card bg-[#141d34]">
-                    <div class="p-10 flex flex-col justify-center h-full min-h-[300px] relative z-20">
-                         <h4 class="text-3xl md:text-5xl font-serif mb-4 leading-none">Cultura & <span class="text-accent">Inspiração</span></h4>
-                         <p class="text-gray-400 max-w-md">Brooklyn Bridge, Central Park, Times Square. Não somos apenas turistas, somos artistas à procura de cenário.</p>
+                    <!-- Item 3 -->
+                    <div class="group experience-card">
+                        <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-sm mb-6 image-mask">
+                            <img src="https://images.pexels.com/photos/3771825/pexels-photo-3771825.jpeg" alt="Urban Photoshoot" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+                        </div>
+                        <h4 class="text-3xl font-serif mb-3">Portfólio Urbano</h4>
+                        <p class="text-muted font-light max-w-md">A arquitetura imponente de Manhattan é o teu cenário. Sessões fotográficas profissionais para registares o teu movimento pelas ruas da cidade.</p>
                     </div>
-                     <span class="text-[150px] absolute -top-10 -right-5 opacity-5 font-serif leading-none">NY</span>
-                </div>
 
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="py-24 bg-accent text-primary relative">
-        <div class="container mx-auto px-6">
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                 <div class="order-2 md:order-1 relative">
-                    <div class="w-full h-[400px] md:h-[500px] bg-primary overflow-hidden relative rotate-3 hover:rotate-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-2xl">
-                        <img src="https://imersao-da-danca-1nc7.vercel.app/grupo.png" alt="Grupo Trilha da Dança" class="w-full h-full object-cover mix-blend-normal">
-                    </div>
-                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-white flex items-center justify-center font-bold text-primary rounded-full animate-spin-slow text-xs p-2 text-center border-4 border-primary">
-                        PARA QUEM AMA DANÇA
-                    </div>
-                 </div>
-                 <div class="order-1 md:order-2 space-y-6">
-                     <h2 class="text-6xl md:text-8xl font-serif font-black tracking-tighter">É PARA <br>TI?</h2>
-                     <p class="text-xl md:text-2xl font-medium leading-normal text-primary/90">
-                         Se procuras evolução técnica imersiva ou queres respirar a atmosfera artística da metrópole mais vibrante do mundo, este lugar é teu.
-                     </p>
-                     <ul class="space-y-4 font-serif text-2xl md:text-3xl italic opacity-80">
-                         <li class="border-b border-primary/20 pb-2 hover:text-white transition-colors">✓ Bailarinos em formação</li>
-                         <li class="border-b border-primary/20 pb-2 hover:text-white transition-colors">✓ Apaixonados pela Broadway</li>
-                         <li class="border-b border-primary/20 pb-2 hover:text-white transition-colors">✓ Artistas globetrotters</li>
-                     </ul>
-                 </div>
-             </div>
-        </div>
-    </section>
-
-    <section class="py-32 bg-primary text-white text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://source.unsplash.com/random/1920x1080/?newyork,broadway')] bg-fixed opacity-[0.05] bg-cover grayscale"></div>
+    <!-- SECTION 4: FULLWIDTH IMAGE PARALLAX -->
+    <section class="relative h-[80vh] w-full overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/40 z-10"></div>
+        <img src="https://images.pexels.com/photos/3119028/pexels-photo-3119028.jpeg" alt="NY Skyline" class="absolute inset-0 w-full h-full object-cover parallax-img" data-speed="0.8">
         
-        <div class="container mx-auto px-6 relative z-10">
-            <span class="block text-accent text-sm tracking-widest uppercase mb-4">O Legado Continua</span>
-            <h2 class="text-4xl md:text-6xl font-serif mb-12">"A Trilha da Dança transforma trajetórias.<br>Agora, o nosso palco é a <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-accent to-white drop-shadow-md">Big Apple.</span>"</h2>
+        <div class="relative z-20 text-center px-6">
+            <h2 class="font-serif text-5xl md:text-8xl text-white font-medium mb-6 drop-shadow-2xl">
+                O Teu Próximo <span class="italic text-accent">Palco.</span>
+            </h2>
+            <a href="#lista-vip" class="inline-block border-b border-white pb-1 text-sm tracking-widest uppercase hover:text-accent hover:border-accent transition-colors hover-target">Garantir Lugar</a>
+        </div>
+    </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mt-20">
-                <div class="bg-white/5 backdrop-blur-md p-8 border border-white/10 hover:-translate-y-2 hover:border-accent/40 hover:bg-white/10 transition-all duration-300">
-                    <p class="text-2xl text-accent mb-4">“...”</p>
-                    <p class="italic opacity-80 mb-6">"Foi a experiência mais transformadora da minha vida. A imersão total abriu-me a mente, a evolução é real e mal posso esperar por NY."</p>
-                    <p class="font-bold text-sm uppercase text-accent">— Participante 2024</p>
+    <!-- SECTION 5: CLEAN TESTIMONIALS -->
+    <section class="py-32 bg-surface border-y border-white/5">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-20">
+                <span class="text-accent text-xs uppercase tracking-[0.3em] font-medium block mb-4">A Nossa Marca</span>
+                <h2 class="font-serif text-4xl md:text-5xl">O Impacto <span class="italic text-white/50">Trilha da Dança</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+                <!-- Testimonial 1 -->
+                <div class="text-center px-4">
+                    <div class="text-accent text-4xl font-serif mb-6 leading-none">"</div>
+                    <p class="text-muted font-light italic mb-8 leading-relaxed">
+                        A organização foi imaculada. A imersão técnica abriu-me horizontes que eu nem sabia que existiam. Pronta para o desafio em NY.
+                    </p>
+                    <span class="block text-xs uppercase tracking-widest font-medium">Participante 2024</span>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md p-8 border border-white/10 hover:-translate-y-2 hover:border-accent/40 hover:bg-white/10 transition-all duration-300 delay-100">
-                    <p class="text-2xl text-accent mb-4">“...”</p>
-                    <p class="italic opacity-80 mb-6">"Organização impecável. Senti-me segura, inspirada a cada minuto e preparada para os desafios práticos."</p>
-                    <p class="font-bold text-sm uppercase text-accent">— Participante 2023</p>
+                <!-- Testimonial 2 -->
+                <div class="text-center px-4">
+                    <div class="text-accent text-4xl font-serif mb-6 leading-none">"</div>
+                    <p class="text-muted font-light italic mb-8 leading-relaxed">
+                        Mais do que aulas de dança, foi uma mudança de mindset. Respirar arte intensamente transformou a minha confiança como bailarino.
+                    </p>
+                    <span class="block text-xs uppercase tracking-widest font-medium">Participante 2023</span>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md p-8 border border-white/10 hover:-translate-y-2 hover:border-accent/40 hover:bg-white/10 transition-all duration-300 delay-200">
-                    <p class="text-2xl text-accent mb-4">“...”</p>
-                    <p class="italic opacity-80 mb-6">"O equilíbrio perfeito entre aulas intensas e cultura. Uma vivência única para qualquer bailarino. Recomendo de olhos fechados."</p>
-                    <p class="font-bold text-sm uppercase text-accent">— Participante 2024</p>
+                <!-- Testimonial 3 -->
+                <div class="text-center px-4">
+                    <div class="text-accent text-4xl font-serif mb-6 leading-none">"</div>
+                    <p class="text-muted font-light italic mb-8 leading-relaxed">
+                        Sentir a energia dos professores internacionais mudou a minha perspetiva. Recomendo de olhos fechados para quem quer evoluir a sério.
+                    </p>
+                    <span class="block text-xs uppercase tracking-widest font-medium">Participante 2024</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="lista-vip" class="py-24 bg-white relative">
-        <div class="container mx-auto px-6 max-w-3xl">
+    <!-- SECTION 6: MINIMALIST FORM (Lista VIP) -->
+    <section id="lista-vip" class="py-32 bg-background relative">
+        <div class="container mx-auto px-6 max-w-4xl flex flex-col items-center">
+            
             <div class="text-center mb-16">
-                <h2 class="text-5xl md:text-7xl font-serif font-black text-primary mb-6 tracking-tighter">MAKE IT <span class="text-accent italic">REAL</span></h2>
-                <p class="text-gray-600 text-lg">As vagas para a Edição Nova Iorque 2026 são extremamente limitadas para garantir a qualidade da experiência nos estúdios. Entra na Lista VIP para receberes o roteiro em primeira mão.</p>
+                <h2 class="font-serif text-5xl md:text-6xl mb-6">Lista <span class="italic text-accent">VIP</span></h2>
+                <p class="text-muted font-light text-lg max-w-xl mx-auto">
+                    A exclusividade exige limitação. As vagas para a edição de Nova Iorque 2026 são restritas. Regista-te para receberes o acesso antecipado ao roteiro.
+                </p>
             </div>
 
-            <form class="space-y-12">
+            <form class="w-full max-w-2xl space-y-10">
+                
                 <div class="relative group">
-                    <input type="text" id="nome" required class="block w-full py-4 bg-transparent border-b-2 border-gray-300 text-2xl font-serif text-primary focus:outline-none focus:border-accent transition-colors placeholder-transparent peer">
-                    <label for="nome" class="absolute left-0 -top-6 text-sm text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">Nome Completo</label>
+                    <input type="text" id="nome" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
+                    <label for="nome" class="absolute left-0 top-3 text-muted text-xl md:text-2xl font-light cursor-text transition-all peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">O teu nome</label>
                 </div>
 
                 <div class="relative group">
-                    <input type="email" id="email" required class="block w-full py-4 bg-transparent border-b-2 border-gray-300 text-2xl font-serif text-primary focus:outline-none focus:border-accent transition-colors placeholder-transparent peer">
-                    <label for="email" class="absolute left-0 -top-6 text-sm text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">E-mail Principal</label>
+                    <input type="email" id="email" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
+                    <label for="email" class="absolute left-0 top-3 text-muted text-xl md:text-2xl font-light cursor-text transition-all peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">O teu e-mail</label>
                 </div>
 
                 <div class="relative group">
-                    <input type="tel" id="whatsapp" required class="block w-full py-4 bg-transparent border-b-2 border-gray-300 text-2xl font-serif text-primary focus:outline-none focus:border-accent transition-colors placeholder-transparent peer">
-                    <label for="whatsapp" class="absolute left-0 -top-6 text-sm text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">WhatsApp (com DDI)</label>
+                    <input type="tel" id="whatsapp" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
+                    <label for="whatsapp" class="absolute left-0 top-3 text-muted text-xl md:text-2xl font-light cursor-text transition-all peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">WhatsApp (com indicativo)</label>
                 </div>
 
-                <div class="pt-8">
-                    <button type="button" class="w-full bg-primary text-white font-serif text-3xl italic py-6 hover:bg-accent hover:shadow-[0_10px_30px_rgba(192,160,98,0.4)] transition-all duration-300 flex items-center justify-center group overflow-hidden relative rounded-lg">
-                        <span class="relative z-10 group-hover:-translate-y-[150%] transition-transform duration-500 block">Quero entrar na Lista VIP</span>
-                        <span class="absolute z-10 translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500 block text-primary font-bold">Nova Iorque Espera-te</span>
+                <div class="pt-12 text-center">
+                    <button type="button" class="hover-target inline-block bg-white text-background font-medium uppercase tracking-[0.2em] text-sm px-12 py-5 rounded-full hover:bg-accent hover:text-white transition-all duration-300">
+                        Solicitar Convite VIP
                     </button>
+                    <p class="text-[10px] text-muted uppercase tracking-widest mt-6">*Zero Spam. Apenas arte e evolução.</p>
                 </div>
-                <p class="text-xs text-center text-gray-400 mt-4">*Sem compromisso de compra. Zero Spam. Apenas arte.</p>
             </form>
         </div>
     </section>
 
-    <footer class="bg-primary pt-24 pb-12 border-t border-white/5">
-        <div class="container mx-auto px-6 text-center">
-             <div class="mb-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                <img src="https://imersao-da-danca-1nc7.vercel.app/logo.png" alt="Logo" class="h-12 mx-auto brightness-0 invert">
-             </div>
+    <!-- FOOTER STRICT -->
+    <footer class="bg-surface pt-20 pb-10 border-t border-white/5">
+        <div class="container mx-auto px-6 flex flex-col items-center text-center">
             
-            <div class="flex justify-center space-x-8 mb-12">
-                <a href="https://www.youtube.com/channel/UCe9WUyfiPn4YEV40erbyz8g" target="_blank" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:border-accent hover:shadow-[0_0_15px_rgba(192,160,98,0.5)] hover:text-primary transition-all duration-300">
+            <a href="#" class="mb-10 w-24 opacity-60 hover:opacity-100 transition-opacity hover-target">
+                <img src="https://imersao-da-danca-1nc7.vercel.app/logo.png" alt="Logo" class="w-full brightness-0 invert">
+            </a>
+            
+            <div class="flex space-x-6 mb-12">
+                <a href="https://www.youtube.com/channel/UCe9WUyfiPn4YEV40erbyz8g" target="_blank" class="text-muted hover:text-accent transition-colors hover-target">
+                    <span class="sr-only">YouTube</span>
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
+                <!-- Adicionar links Instagram/TikTok se houver -->
             </div>
 
-            <p class="text-white/40 text-sm font-sans">
-                © 2026 Trilha da Dança. Todos os direitos reservados.
+            <p class="text-muted/50 text-xs tracking-widest uppercase">
+                © 2026 Trilha da Dança. Imersão Nova Iorque.
             </p>
         </div>
     </footer>
 
+    <!-- SCRIPT ANIMATIONS -->
     <script>
-        // Init Lenis Scroll
+        // Init Lenis Scroll (Smooth Scrolling)
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -303,6 +351,7 @@
 
         requestAnimationFrame(raf)
 
+        // Custom Cursor Logic
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
 
@@ -316,56 +365,319 @@
             cursorOutline.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+            }, { duration: 300, fill: "forwards" });
         });
 
+        // Magnetic Button Logic
+        const magneticWraps = document.querySelectorAll('.magnetic-wrap');
+        magneticWraps.forEach(wrap => {
+            const btn = wrap.querySelector('.magnetic-btn');
+            
+            wrap.addEventListener('mousemove', (e) => {
+                const rect = wrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(btn, {
+                    x: x * 0.4,
+                    y: y * 0.4,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
+
+            wrap.addEventListener('mouseleave', () => {
+                gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.7,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
+
+        // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
 
+        // Preloader Sequence
         window.addEventListener('load', () => {
             const tl = gsap.timeline();
-            tl.to("#loader h1", { opacity: 0, duration: 0.5, delay: 1 })
-              .to("#loader", { y: "-100%", duration: 1, ease: "power4.inOut" })
-              .from(".hero-img", { y: 100, opacity: 0, duration: 1.5, ease: "power3.out" }, "-=0.5")
-              .from("header h2", { y: 50, opacity: 0, duration: 1 }, "-=1");
+            
+            tl.to("#loader-text", { opacity: 1, duration: 1, ease: "power2.inOut" })
+              .to("#loader-line", { width: "200px", duration: 0.8, ease: "power2.inOut" }, "-=0.5")
+              .to("#loader", { yPercent: -100, duration: 1.2, ease: "expo.inOut", delay: 0.5 })
+              .to(".hero-elem", { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out", clearProps: "all" }, "-=0.5");
+            
+            // Initial state for hero elements
+            gsap.set(".hero-elem", { y: 30 });
         });
 
-        gsap.to(".marquee-container", {
-            xPercent: -50,
-            ease: "none",
-            duration: 10,
-            repeat: -1
+        // Hide Nav on Scroll Down, Show on Scroll Up
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll <= 0) {
+                navbar.style.transform = "translateY(0)";
+            } else if (currentScroll > lastScroll) {
+                navbar.style.transform = "translateY(-100%)";
+            } else {
+                navbar.style.transform = "translateY(0)";
+            }
+            lastScroll = currentScroll;
         });
 
+        // Reveal Text Animation
         const textElements = document.querySelectorAll(".reveal-text");
         textElements.forEach(text => {
             gsap.from(text, {
                 scrollTrigger: {
                     trigger: text,
-                    start: "top 80%",
-                    end: "bottom 20%",
+                    start: "top 85%",
                     toggleActions: "play none none reverse"
                 },
-                y: 50,
+                y: 40,
                 opacity: 0,
-                duration: 1,
+                duration: 1.2,
                 ease: "power3.out"
             });
         });
 
-        const cards = document.querySelectorAll('.feature-card');
-        cards.forEach((card, index) => {
-            gsap.from(card, {
+        // Experience Cards Image Parallax
+        const cards = document.querySelectorAll('.experience-card');
+        cards.forEach((card, i) => {
+            const img = card.querySelector('img');
+            gsap.to(img, {
+                yPercent: 20,
+                ease: "none",
                 scrollTrigger: {
                     trigger: card,
-                    start: "top 90%"
-                },
-                y: 100,
-                opacity: 0,
-                duration: 0.8,
-                delay: index * 0.1,
-                ease: "power2.out"
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
             });
         });
+
+        // Fullwidth Parallax
+        gsap.to(".parallax-img", {
+            yPercent: 30,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parallax-img",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
     </script>
+
+<!-- SYSTEM SCRIPTS (LPGenerator Compatibility) -->
+<script>
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+    });
+}
+
+async function initSite() {
+    try {
+        if (typeof gsap === 'undefined') await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js');
+        if (typeof ScrollTrigger === 'undefined') await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js');
+        if (typeof Lenis === 'undefined') await loadScript('https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js');
+        startApp();
+    } catch (e) {
+        console.error("Critical: Failed to load animation libraries.", e);
+        document.body.style.opacity = 1; 
+    }
+}
+
+function startApp() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+       body.editor-active * { cursor: pointer !important; }
+       body.editor-active *:hover { outline: 2px dashed #D4AF37 !important; outline-offset: 2px; }
+       body.editor-active [contenteditable="true"]:focus { outline: 2px solid #D4AF37 !important; background: rgba(212, 175, 55, 0.1); cursor: text !important; }
+       body.editor-active a { pointer-events: none !important; }
+    `;
+    document.head.appendChild(style);
+
+    window.isEditorActive = false;
+    
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'TOGGLE_EDITOR') {
+             window.isEditorActive = event.data.enabled;
+             if (window.isEditorActive) {
+                document.body.classList.add('editor-active');
+                enableEditing();
+             } else {
+                document.body.classList.remove('editor-active');
+                disableEditing();
+             }
+        }
+        if (event.data.type === 'UPDATE_STYLE') {
+            const { elementId, styles, textContent } = event.data;
+            const el = document.getElementById(elementId);
+            if (el) {
+                if (styles) Object.assign(el.style, styles);
+                if (textContent !== undefined) el.innerText = textContent;
+            }
+        }
+        if (event.data.type === 'UPDATE_ELEMENT_SRC') {
+             const { id, src } = event.data;
+             const el = document.getElementById(id);
+             if (el && el.tagName === 'IMG') {
+                 el.src = src;
+             }
+        }
+    });
+
+    let draggedSection = null;
+
+    function createDragHandle() {
+        const handle = document.createElement('div');
+        handle.className = 'drag-handle';
+        handle.innerHTML = '⠿';
+        handle.style.cssText = 'position:absolute;top:8px;left:8px;z-index:9999;cursor:grab;background:rgba(212, 175, 55, 0.9);color:#000;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0;transition:opacity 0.2s;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+        handle.setAttribute('draggable', 'true');
+        return handle;
+    }
+
+    function enableDragDrop() {
+        const sections = document.querySelectorAll('body > section, body > header, body > footer');
+        sections.forEach(section => {
+            section.style.position = 'relative';
+            const handle = createDragHandle();
+
+            section.addEventListener('mouseenter', () => { handle.style.opacity = '1'; });
+            section.addEventListener('mouseleave', () => { handle.style.opacity = '0'; });
+
+            handle.addEventListener('dragstart', (e) => {
+                e.stopPropagation();
+                draggedSection = section;
+                section.style.opacity = '0.4';
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            section.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                if (draggedSection && section !== draggedSection) {
+                    section.style.borderTop = '3px solid #D4AF37';
+                }
+            });
+
+            section.addEventListener('dragleave', () => {
+                section.style.borderTop = '';
+            });
+
+            section.addEventListener('drop', (e) => {
+                e.preventDefault();
+                section.style.borderTop = '';
+                if (draggedSection && section !== draggedSection) {
+                    const parent = section.parentNode;
+                    const allSections = Array.from(parent.children);
+                    const dragIdx = allSections.indexOf(draggedSection);
+                    const dropIdx = allSections.indexOf(section);
+                    if (dragIdx < dropIdx) {
+                        parent.insertBefore(draggedSection, section.nextSibling);
+                    } else {
+                        parent.insertBefore(draggedSection, section);
+                    }
+                    window.parent.postMessage({ type: 'CONTENT_UPDATED', payload: { html: document.documentElement.outerHTML } }, '*');
+                }
+            });
+
+            handle.addEventListener('dragend', () => {
+                if (draggedSection) {
+                    draggedSection.style.opacity = '';
+                    draggedSection = null;
+                }
+                document.querySelectorAll('section, header, footer').forEach(s => { s.style.borderTop = ''; });
+            });
+
+            section.prepend(handle);
+        });
+    }
+
+    function disableDragDrop() {
+        document.querySelectorAll('.drag-handle').forEach(h => h.remove());
+    }
+
+    function enableEditing() {
+        document.querySelectorAll('h1, h2, h3, h4, p, span, button, li, a').forEach(el => {
+            el.setAttribute('contenteditable', 'true');
+            el.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
+            
+            el.addEventListener('blur', () => {
+                window.parent.postMessage({ type: 'CONTENT_UPDATED', payload: { html: document.documentElement.outerHTML } }, '*');
+            });
+            el.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') {
+                     document.execCommand('insertLineBreak');
+                     e.preventDefault();
+                }
+            });
+        });
+        enableDragDrop();
+    }
+
+    function disableEditing() {
+        document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+        disableDragDrop();
+    }
+
+    document.addEventListener('click', (e) => {
+        if (!window.isEditorActive) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation(); 
+
+        const target = e.target;
+        if (['HTML', 'BODY'].includes(target.tagName)) return;
+        
+        if (!target.id) target.id = 'el-' + Math.random().toString(36).substr(2, 9);
+
+        const computed = window.getComputedStyle(target);
+        const payload = {
+            id: target.id,
+            tagName: target.tagName,
+            innerText: target.innerText?.substring(0, 100) || '',
+            src: target.tagName === 'IMG' ? target.src : undefined,
+            styles: {
+                color: computed.color,
+                backgroundColor: computed.backgroundColor,
+                backgroundImage: computed.backgroundImage,
+                fontSize: computed.fontSize,
+                padding: computed.padding,
+                borderRadius: computed.borderRadius,
+                width: computed.width,
+                height: computed.height,
+            }
+        };
+
+        if (target.hasAttribute('contenteditable')) {
+            target.focus();
+        }
+        
+        window.parent.postMessage({ type: 'ELEMENT_SELECTED', payload }, '*');
+        return false;
+    }, true);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSite);
+} else {
+    initSite();
+}
+</script>
+
 </body>
 </html>
