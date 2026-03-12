@@ -6,16 +6,12 @@
     <title>Trilha da Dança | NYC 2027</title>
     <meta name="description" content="Imersão de Dança em Nova York 2027. A experiência definitiva para bailarinos.">
     
-    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Substituído 'Inter' por 'Montserrat' para um visual muito mais luxuoso e editorial -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- GSAP & Lenis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -146,21 +142,17 @@
 </head>
 <body class="font-sans antialiased selection:bg-accent selection:text-background">
 
-    <!-- Clean Loader -->
     <div id="loader">
         <h1 class="font-serif text-primary text-3xl italic tracking-widest opacity-0" id="loader-text">NYC 2027</h1>
         <div class="loader-line" id="loader-line"></div>
     </div>
 
-    <!-- Custom Cursor -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
 
-    <!-- Glass Navigation -->
     <nav class="fixed top-0 w-full z-50 px-6 py-5 glass-nav transition-transform duration-500" id="navbar">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="block w-28 md:w-32 hover-target">
-                <!-- Imagem Logo Local -->
+            <a href="#" class="block w-36 md:w-48 hover-target">
                 <img src="images/logo.png" alt="Trilha da Dança" class="w-full brightness-0 invert opacity-90 hover:opacity-100 transition-opacity">
             </a>
             <a href="#lista-vip" class="group hover-target relative overflow-hidden px-6 py-2 rounded-full border border-white/20 hover:border-accent hover:shadow-[0_0_15px_rgba(198,143,43,0.2)] transition-all duration-300">
@@ -169,22 +161,16 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION: Elegante e Focada -->
     <header class="relative min-h-screen w-full flex items-center overflow-hidden bg-background pt-20">
         
-        <!-- Subtle Background Glows -->
         <div class="absolute top-0 left-0 w-[50vw] h-[50vw] bg-accent/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-        <!-- Bailarina ancorada no fundo à direita -->
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <!-- Fade sutil na esquerda apenas para garantir a leitura do texto -->
-            <div class="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent z-10"></div>
+            <img src="images/fundo-ny.png" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover blur-[4px] opacity-90 z-0 scale-105 parallax-img" data-speed="5">
             
-            <!-- Imagem Bailarina Local (Subi a bailarina mudando top-1/2 para top-1/3 e ajuste no md:bottom-[-10%] para md:bottom-[0%]) -->
-            <img src="images/bailarina.png" alt="Bailarina em Nova York" class="absolute top-1/3 -translate-y-1/2 right-[-10%] md:right-0 md:top-auto md:bottom-0 md:translate-y-0 w-auto h-[80%] md:h-[90%] object-contain opacity-85 hero-img z-0" data-speed="15">
+            <div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-background/30 z-10"></div>
         </div>
 
-        <!-- Content Box -->
         <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center">
             
             <div class="w-full md:w-[65%] text-left pt-10 md:pt-0">
@@ -201,7 +187,6 @@
                     O concreto da metrópole. As luzes da Times Square. O pulsar dos maiores estúdios do planeta. Sua arte exige o palco mais desafiador do mundo.
                 </p>
                 
-                <!-- Magnetic Button (Elegante e Direto) -->
                 <div class="hero-elem magnetic-wrap inline-block">
                     <a href="#lista-vip" class="magnetic-btn hover-target inline-flex items-center justify-center px-8 py-4 rounded-full border border-accent bg-accent/10 hover:bg-accent hover:text-white text-accent transition-all duration-300 backdrop-blur-sm shadow-[0_0_20px_rgba(198,143,43,0.15)] hover:shadow-[0_0_30px_rgba(198,143,43,0.3)]">
                         <span class="font-bold uppercase tracking-[0.15em] text-sm">Garantir Vaga VIP</span>
@@ -212,12 +197,10 @@
         </div>
     </header>
 
-    <!-- SECTION 2: THE HOOK (Bento Grid Design) -->
     <section class="py-32 bg-background relative z-20 border-t border-white/5 shadow-2xl">
         <div class="container mx-auto px-6 max-w-7xl">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 
-                <!-- Bloco Principal -->
                 <div class="lg:col-span-7 bg-surface/60 backdrop-blur-xl border border-white/5 rounded-3xl p-10 md:p-16 flex flex-col justify-center relative overflow-hidden group reveal-text shadow-xl">
                     <div class="absolute -top-32 -right-32 w-64 h-64 bg-accent/20 rounded-full blur-[80px] group-hover:bg-accent/30 transition-colors duration-700 pointer-events-none"></div>
                     <div class="relative z-10">
@@ -228,17 +211,14 @@
                     </div>
                 </div>
 
-                <!-- Blocos Menores da Direita -->
                 <div class="lg:col-span-5 flex flex-col gap-8">
                     
-                    <!-- Bloco Destaque -->
                     <div class="bg-accent/10 border border-accent/20 rounded-3xl p-8 md:p-10 backdrop-blur-md reveal-text shadow-lg hover:border-accent/40 transition-colors duration-500">
                         <p class="text-xl md:text-2xl font-medium text-accent leading-relaxed">
                             Durante 10 dias inteiros em Julho de 2027, você vai deixar de ser apenas um espectador.
                         </p>
                     </div>
 
-                    <!-- Bloco Texto Descritivo -->
                     <div class="bg-surface/40 border border-white/5 rounded-3xl p-8 md:p-10 backdrop-blur-md reveal-text shadow-lg hover:bg-surface/60 transition-colors duration-500">
                         <p class="text-base md:text-lg font-light text-muted leading-relaxed">
                             Desenhamos um roteiro intensivo e meticuloso no epicentro da dança global. Você vai respirar o suor e a dedicação dos estúdios mais lendários de Manhattan, caminhar pelas avenidas que inspiraram os maiores musicais e absorver uma energia que não existe em mais nenhum lugar da Terra. Nova York não vai apenas te ensinar passos; <strong class="text-primary font-medium">Nova York vai mudar a forma como você se expressa.</strong>
@@ -250,12 +230,10 @@
         </div>
     </section>
 
-    <!-- SECTION 3: STICKY SCROLL EXPERIENCE -->
     <section class="relative bg-background" id="experience-section">
         <div class="container mx-auto px-6 max-w-7xl">
             <div class="flex flex-col lg:flex-row items-start py-24">
                 
-                <!-- Left: Sticky Title -->
                 <div class="w-full lg:w-1/3 lg:sticky lg:top-40 mb-16 lg:mb-0">
                     <span class="text-accent text-xs uppercase tracking-[0.3em] font-medium mb-4 block">Julho de 2027</span>
                     <h3 class="font-serif text-5xl md:text-6xl mb-6 leading-tight">10 Dias de <br><span class="italic text-white/50">Imersão</span> <br>Absoluta.</h3>
@@ -264,37 +242,30 @@
                     </p>
                 </div>
 
-                <!-- Right: Scrolling Cards -->
                 <div class="w-full lg:w-2/3 lg:pl-16 space-y-24">
                     
-                    <!-- Item 1 -->
                     <div class="group experience-card">
                         <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-lg mb-6 image-mask border border-white/5 shadow-lg bg-surface">
                             <div class="absolute inset-0 bg-background/20 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                            <!-- Imagem Estúdios Local -->
-                            <img src="images/estudios.jpg" alt="Estúdios Icônicos" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <img src="images/uniforme.jpg" alt="Estúdios Icônicos" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out">
                         </div>
                         <h4 class="text-3xl font-serif mb-3 text-primary">Técnica em Estúdios Icônicos</h4>
                         <p class="text-muted font-light max-w-md">Broadway Dance Center. Steps on Broadway. Você vai compartilhar as barras, os espelhos e a sala com profissionais que fazem a indústria acontecer. O nível de exigência e a energia das aulas em Nova York são inigualáveis.</p>
                     </div>
 
-                    <!-- Item 2 -->
                     <div class="group experience-card">
                         <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-lg mb-6 image-mask border border-white/5 shadow-lg bg-surface">
                             <div class="absolute inset-0 bg-background/20 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                            <!-- Imagem Broadway Local -->
                             <img src="images/broadway.jpg" alt="A Cultura da Broadway" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out">
                         </div>
                         <h4 class="text-3xl font-serif mb-3 text-primary">O Esplendor da Broadway</h4>
                         <p class="text-muted font-light max-w-md">Lugar garantido para assistir à magnitude das produções na Broadway. Você vai ver ao vivo o que significa dominar a performance de palco, a presença cênica e a precisão coreográfica que define o padrão mundial.</p>
                     </div>
 
-                    <!-- Item 3 -->
                     <div class="group experience-card">
                         <div class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-lg mb-6 image-mask border border-white/5 shadow-lg bg-surface">
                             <div class="absolute inset-0 bg-background/20 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                            <!-- Imagem Urbano Local -->
-                            <img src="images/urbano.jpg" alt="Portfólio Urbano" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out">
+                            <img src="images/bridge.jpg" alt="Portfólio Urbano" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700 ease-out">
                         </div>
                         <h4 class="text-3xl font-serif mb-3 text-primary">A Cidade como Cenário</h4>
                         <p class="text-muted font-light max-w-md">Brooklyn Bridge, Central Park, as ruas cruas de Manhattan. Vamos transformar o tecido urbano de NYC no seu palco pessoal com sessões fotográficas profissionais para registrar a sua arte no coração do mundo.</p>
@@ -305,11 +276,8 @@
         </div>
     </section>
 
-    <!-- SECTION 4: FULLWIDTH IMAGE PARALLAX -->
     <section class="relative h-[80vh] w-full overflow-hidden flex items-center justify-center">
-        <!-- Filtro suave em vez de misturas pesadas -->
         <div class="absolute inset-0 bg-background/60 z-10"></div>
-        <!-- Imagem Skyline Local -->
         <img src="images/ny-skyline.jpg" alt="Skyline de Nova York" class="absolute inset-0 w-full h-full object-cover parallax-img" data-speed="0.8">
         
         <div class="relative z-20 text-center px-6">
@@ -321,7 +289,6 @@
         </div>
     </section>
 
-    <!-- SECTION 5: CLEAN TESTIMONIALS -->
     <section class="py-32 bg-surface border-y border-white/5">
         <div class="container mx-auto px-6 max-w-6xl">
             <div class="text-center mb-20">
@@ -330,7 +297,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-                <!-- Testimonial 1 -->
                 <div class="text-center px-4">
                     <div class="text-accent text-5xl font-serif mb-4 leading-none">"</div>
                     <p class="text-muted font-light italic mb-8 leading-relaxed">
@@ -338,7 +304,6 @@
                     </p>
                     <span class="block text-xs uppercase tracking-widest font-bold text-primary">Participante 2024</span>
                 </div>
-                <!-- Testimonial 2 -->
                 <div class="text-center px-4">
                     <div class="text-accent text-5xl font-serif mb-4 leading-none">"</div>
                     <p class="text-muted font-light italic mb-8 leading-relaxed">
@@ -346,7 +311,6 @@
                     </p>
                     <span class="block text-xs uppercase tracking-widest font-bold text-primary">Participante 2023</span>
                 </div>
-                <!-- Testimonial 3 -->
                 <div class="text-center px-4">
                     <div class="text-accent text-5xl font-serif mb-4 leading-none">"</div>
                     <p class="text-muted font-light italic mb-8 leading-relaxed">
@@ -358,7 +322,6 @@
         </div>
     </section>
 
-    <!-- SECTION 6: MINIMALIST FORM (Lista VIP) -->
     <section id="lista-vip" class="py-32 bg-background relative">
         <div class="container mx-auto px-6 max-w-4xl flex flex-col items-center">
             
@@ -396,7 +359,6 @@
         </div>
     </section>
 
-    <!-- FOOTER STRICT -->
     <footer class="bg-surface pt-20 pb-10 border-t border-white/5">
         <div class="container mx-auto px-6 flex flex-col items-center text-center">
             
@@ -417,7 +379,6 @@
         </div>
     </footer>
 
-    <!-- SCRIPT ANIMATIONS -->
     <script>
         // Failsafe DEFINITIVO para Remover Ecrã Preto
         window.addEventListener('DOMContentLoaded', function() {
@@ -450,11 +411,10 @@
             }
         } catch (e) { console.warn("Lenis fallback:", e); }
 
-        // Interações com o Rato (Cursor + Parallax Bailarina)
+        // Interações com o Rato (Cursor + Parallax Bailarina Removido e mantido de certa forma para as imagens)
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
-        const heroImg = document.querySelector('.hero-img');
-
+        
         window.addEventListener('mousemove', (e) => {
             const posX = e.clientX;
             const posY = e.clientY;
@@ -470,14 +430,6 @@
                     left: `${posX}px`,
                     top: `${posY}px`
                 }, { duration: 300, fill: "forwards" });
-            }
-
-            // Movimento Parallax 3D da Bailarina
-            if (heroImg) {
-                const speed = heroImg.getAttribute('data-speed');
-                const x = (window.innerWidth - posX * speed) / 1000;
-                const y = (window.innerHeight - posY * speed) / 1000;
-                heroImg.style.transform = `translateX(${x}px) translateY(${y}px)`;
             }
         });
 
@@ -522,7 +474,6 @@
                     tl.to("#loader-text", { opacity: 1, duration: 0.8, ease: "power2.inOut" })
                       .to("#loader-line", { width: "200px", duration: 0.6, ease: "power2.inOut" }, "-=0.4")
                       .to("#loader", { opacity: 0, duration: 0.8, ease: "power2.inOut", delay: 0.2 })
-                      // Usando gsap.from asseguramos que o CSS limpo sem conflitos funcione. O título não desaparecerá mais ao voltar.
                       .from(".hero-elem", { opacity: 0, y: 30, duration: 1, stagger: 0.15, ease: "power3.out" }, "-=0.2");
 
                     const textElements = document.querySelectorAll(".reveal-text");
@@ -555,15 +506,19 @@
                         });
                     });
 
-                    gsap.to(".parallax-img", {
-                        yPercent: 30,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: ".parallax-img",
-                            start: "top bottom",
-                            end: "bottom top",
-                            scrub: true
-                        }
+                    // Aplica o parallax na imagem de fundo do hero e na seção 4
+                    const parallaxImages = document.querySelectorAll(".parallax-img");
+                    parallaxImages.forEach((img) => {
+                        gsap.to(img, {
+                            yPercent: 30,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: img.parentElement,
+                                start: "top bottom",
+                                end: "bottom top",
+                                scrub: true
+                            }
+                        });
                     });
                 }
             } catch(e) { console.warn("GSAP setup error:", e); }
@@ -587,7 +542,6 @@
 
     </script>
 
-<!-- SYSTEM SCRIPTS (LPGenerator Compatibility) -->
 <script>
 function loadScript(src) {
     return new Promise((resolve, reject) => {
