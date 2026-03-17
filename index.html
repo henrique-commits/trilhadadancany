@@ -24,8 +24,8 @@
                         background: '#1A2332', /* Elegant Dark Blue */
                         surface: '#243042',    /* Slightly lighter blue for cards/sections */
                         primary: '#ffffff',
-                        accent: '#C68F2B',     /* Premium Gold */
-                        muted: '#94a3b8'       /* Slate 400 */
+                        accent: '#C68F2B',      /* Premium Gold */
+                        muted: '#94a3b8'        /* Slate 400 */
                     },
                     fontFamily: {
                         sans: ['Montserrat', 'sans-serif'],
@@ -375,6 +375,7 @@
             </div>
         </div>
     </section>
+    
     <section id="lista-vip" class="py-32 bg-surface border-t border-white/5 relative">
         <div class="container mx-auto px-6 max-w-4xl flex flex-col items-center">
             
@@ -385,25 +386,25 @@
                 </p>
             </div>
 
-            <form class="w-full max-w-2xl space-y-10">
+            <form id="form-vip" class="w-full max-w-2xl space-y-10">
                 
                 <div class="relative group">
-                    <input type="text" id="nome" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
+                    <input type="text" id="nome" name="nome" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
                     <label for="nome" class="absolute left-0 top-3 text-muted text-xl md:text-2xl font-light cursor-text transition-all peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">Seu nome completo</label>
                 </div>
 
                 <div class="relative group">
-                    <input type="email" id="email" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
+                    <input type="email" id="email" name="email" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
                     <label for="email" class="absolute left-0 top-3 text-muted text-xl md:text-2xl font-light cursor-text transition-all peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">Seu melhor e-mail</label>
                 </div>
 
                 <div class="relative group">
-                    <input type="tel" id="whatsapp" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
+                    <input type="tel" id="whatsapp" name="whatsapp" placeholder=" " required class="block w-full py-3 bg-transparent border-b border-white/20 text-xl md:text-2xl text-primary focus:outline-none focus:border-accent transition-colors peer rounded-none">
                     <label for="whatsapp" class="absolute left-0 top-3 text-muted text-xl md:text-2xl font-light cursor-text transition-all peer-focus:-top-6 peer-focus:text-sm peer-focus:text-accent">WhatsApp (com DDD)</label>
                 </div>
 
                 <div class="pt-12 text-center">
-                    <button type="button" class="hover-target inline-block bg-accent text-background font-bold uppercase tracking-[0.2em] text-sm px-12 py-5 rounded-full hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all duration-300">
+                    <button type="submit" id="btn-submit" class="hover-target inline-block bg-accent text-background font-bold uppercase tracking-[0.2em] text-sm px-12 py-5 rounded-full hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all duration-300">
                         Garantir a minha vaga
                     </button>
                     <p class="text-[10px] text-muted uppercase tracking-widest mt-6">*Zero Spam. Apenas arte e evolução pura.</p>
@@ -586,6 +587,46 @@
             } else {
                 navbar.style.transform = "translateY(0)";
             }
+        });
+
+        // ==========================================
+        // SCRIPT DE INTEGRAÇÃO COM GOOGLE SHEETS AQUI
+        // ==========================================
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyBjLiu1-D6AIJn_dWddZn9MX_QRyB_XEtr1p5CxwOB6jTD7-vrzZrSsZuuECumzEFl/exec';
+        const form = document.getElementById('form-vip');
+        const btnSubmit = document.getElementById('btn-submit');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); // Impede a página de recarregar
+            
+            // Muda o texto do botão para dar feedback ao usuário
+            const textoOriginal = btnSubmit.innerText;
+            btnSubmit.innerText = 'Enviando...';
+            btnSubmit.style.opacity = '0.7';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    // Sucesso!
+                    btnSubmit.innerText = 'Vaga Garantida!';
+                    btnSubmit.style.backgroundColor = '#10B981'; // Fica verde
+                    btnSubmit.style.color = 'white';
+                    form.reset(); // Limpa o form
+                    
+                    // Volta o botão ao normal após 3 segundos
+                    setTimeout(() => {
+                        btnSubmit.innerText = textoOriginal;
+                        btnSubmit.style.backgroundColor = '';
+                        btnSubmit.style.opacity = '1';
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Erro!', error.message);
+                    btnSubmit.innerText = 'Erro. Tente novamente.';
+                    setTimeout(() => {
+                        btnSubmit.innerText = textoOriginal;
+                        btnSubmit.style.opacity = '1';
+                    }, 3000);
+                });
         });
 
     </script>
